@@ -1,21 +1,34 @@
 import React, { useState } from 'react';
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
-  const [input, setInput] = useState('');
+  const [accumulator, setAccumulator] = useState({
+    counter: 0,
+    name: 'Counter',
+  });
 
   function increaseCounter() {
-    setCounter(counter + 1);
+    setAccumulator((state) => ({
+      ...state,
+      counter: state.counter + 1,
+    }));
+  }
+
+  function updateName(name) {
+    setAccumulator((state) => ({
+      ...state,
+      name,
+    }));
   }
 
   return (
     <div>
-      <h3>{input}</h3>
       <input
         type="text"
-        onChange={(event) => setInput(event.target.value)}
+        onChange={(event) => updateName(event.target.value)}
       />
-      <h1>Counter: {counter}</h1>
+      <h1>
+        {accumulator.name}: {accumulator.counter}
+      </h1>
       <button onClick={increaseCounter}>Increase</button>
     </div>
   );
