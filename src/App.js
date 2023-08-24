@@ -1,53 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const App = () => {
-  const [userDetails, setUserDetails] = useState({
-    name: '',
-    email: '',
-    password: '',
-    bio: '',
+  const [accumulator, setAccumulator] = useState({
+    counter: 0,
+    name: 'Counter',
   });
 
-  function handleChange(input) {
-    const { name, value } = input.target;
+  const [counter, setCounter] = useState(5);
 
-    setUserDetails((state) => {
-      return { ...state, [name]: value };
-    });
+  function increaseCounter() {
+    setAccumulator((state) => ({
+      ...state,
+      counter: state.counter + 1,
+    }));
   }
 
-  function handleSubmit(form) {
-    form.preventDefault();
-    console.log(userDetails);
+  function updateName(name) {
+    setAccumulator((state) => ({
+      ...state,
+      name,
+    }));
   }
+
+  /**
+   * when we pass an empty array as second arg, the effect runs only on first time that component was render
+   * to clear useEffect you must return something, and also it is possible to get the previous value
+   */
+  useEffect(() => {
+    document.title = `${accumulator.name}: ${counter} new messages!`;
+
+    console.log('effect', counter);
+
+    return () => {
+      console.log('return', counter);
+    };
+  }, [counter]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Name:</h3>
+    <div>
       <input
         type="text"
-        name="name"
-        onChange={handleChange}
+        onChange={(event) => updateName(event.target.value)}
       />
-      <h3>Email:</h3>
-      <input
-        type="email"
-        name="email"
-        onChange={handleChange}
-      />
-      <h3>Password:</h3>
-      <input
-        type="password"
-        name="password"
-        onChange={handleChange}
-      />
-      <h3>Bio:</h3>
-      <textarea
-        name="bio"
-        onChange={handleChange}
-      ></textarea>
-      <button type="submit">Register</button>
-    </form>
+      <h1>
+        {accumulator.name}: {accumulator.counter}
+      </h1>
+      <button onClick={increaseCounter}>+1</button>
+      <h3>Counter 5: {counter}</h3>
+      <button onClick={() => setCounter(counter + 5)}>+ 5</button>
+    </div>
   );
 };
 
