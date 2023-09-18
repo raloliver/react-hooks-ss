@@ -6,10 +6,17 @@ const HttpGet = () => {
   const [error, setError] = useState([]);
 
   useEffect(() => {
-    HttpClient.get('/products')
-      .then(({ data }) => setProducts(data.products))
-      .catch(({ message }) => setError(message));
+    getProducts();
   }, []);
+
+  async function getProducts() {
+    try {
+      const { data } = HttpClient.get('/products');
+      setProducts(data.products);
+    } catch ({ message }) {
+      setError(message);
+    }
+  }
 
   return (
     <>
