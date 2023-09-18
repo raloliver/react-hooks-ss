@@ -11,7 +11,7 @@ const HttpGet = () => {
 
   async function getProducts() {
     try {
-      const { data } = HttpClient.get('/products');
+      const { data } = await HttpClient.get('/products');
       setProducts(data.products);
     } catch ({ message }) {
       setError(message);
