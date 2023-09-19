@@ -1,6 +1,14 @@
+/*
+ * File: Form.js
+ * Project: react-hooks-ss
+ * Created: Monday, September 18th 2023, 5:42:37 am
+ * Last Modified: Tuesday, September 19th 2023, 6:25:46 am
+ * Copyright © 2023 AMDE Agência
+ */
+
 import React, { useState } from 'react';
 
-const App = () => {
+const Form = () => {
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
@@ -51,4 +59,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Form;
